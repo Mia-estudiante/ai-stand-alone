@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 
 from torchvision.datasets import MNIST
 from torchvision.datasets import CIFAR10
-from datasets.dog import Dog
+from my_datasets.dog import Dog
 
 from sklearn.model_selection import train_test_split
 
