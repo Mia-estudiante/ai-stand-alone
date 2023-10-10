@@ -30,6 +30,7 @@ def main():
     end_epoch =  args.epochs
     
     ###################################################
+    
     if args.resume_from:
         ckpt_path = os.path.join(args.results_folder, args.sub_results_folder)
         ckpt = torch.load(
@@ -38,8 +39,8 @@ def main():
         model.load_state_dict(ckpt['model']) 
         optim.load_state_dict(ckpt['optim'])
 
-        start_epoch = args.epochs
-        end_epoch = args.epochs*2
+        start_epoch = ckpt['epochs']
+        end_epoch = args.epochs
 
         print(f"{start_epoch} epoch 까지 학습된 model 재시작, {end_epoch-start_epoch} epoch 를 추가 학습!")
         print(f"{ckpt_path}에서 불러온 model weight file...")
@@ -75,7 +76,9 @@ def main():
                     print('새로운 acc 등장, 모델 weight udpate ', acc)
                     torch.save({
                             "model": model.state_dict(),
-                            "optim": optim.state_dict()
+                            "optim": optim.state_dict(),
+                            "epochs": epoch,
+                            "loss": loss
                         },
                         os.path.join(save_path, "model_best.ckpt")
                     )
